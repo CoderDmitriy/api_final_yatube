@@ -1,7 +1,8 @@
 from django.shortcuts import get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import filters, status, viewsets, permissions
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework import filters, status, viewsets
+from rest_framework.permissions import (
+    IsAuthenticatedOrReadOnly, IsAuthenticated)
 from rest_framework.response import Response
 from rest_framework.pagination import LimitOffsetPagination
 
@@ -47,7 +48,7 @@ class GroupViewSet(viewsets.ModelViewSet):
 
 class FollowViewSet(viewsets.ModelViewSet):
     http_method_names = ['get', 'post']
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [IsAuthenticated]
     serializer_class = FollowSerializer
     filter_backends = [filters.SearchFilter]
     search_fields = ['user__username', 'following__username']
